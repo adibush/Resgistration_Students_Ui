@@ -1,28 +1,41 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import './Registrations.css'
-import RegisteredStudentList from "./RegisteredStudentList";
-import RegisteredStudentFilter from "./RegisteredStudentFilter";
-import RegisteredStudentChart from "./RegisteredStudentChart";
 
-function Registrations(props) {
+import RegisteredStudentFilter from './RegisteredStudentFilter';
+import RegisteredStudentChart from './RegisteredStudentChart';
+import RegisteredStudentList from './RegisteredStudentList';
 
-    const [filteredCourse, setFilteredCourse] = useState('fullstack')
 
-    const filterChangeHandler = (selectedCourse) => {
+function Registrations(props){
+
+    const [filteredCourse, setFilteredCourse] = useState(props.courses[0].name);
+
+    const filterChangeHandler = selectedCourse => {
         setFilteredCourse(selectedCourse);
-    }
+    };
 
-    const filteredRegisteredStudents = props.registeredStudents.filter(student => {
-        return student.course === filteredCourse;
+    const filteredCourseObject = props.courses.find(course => {
+        return course.name.toString() === filteredCourse.toString();
     })
 
-    return(
-        <div className="registrations card">
-            <RegisteredStudentChart registeredStudents={props.registeredStudents} courses={props.courses}/>
-            <RegisteredStudentFilter selected={filteredCourse} onChangeFilter={filterChangeHandler}/>
-            <RegisteredStudentList registeredStudents={filteredRegisteredStudents} course={props.courses[filteredCourse]}/>
+    const filteredRegisteredStudents = props.registeredStudents.filter(student => {
+        return student.courseId === filteredCourseObject.id;
+    });
+
+    return (
+        <div>
+            <div className='registrations card'>
+                <RegisteredStudentChart registeredStudents={props.registeredStudents} courses={props.courses}/>
+                <RegisteredStudentFilter
+                    selected={filteredCourse}
+                    courses={props.courses}
+                    onChangeFilter={filterChangeHandler}
+                />
+                <RegisteredStudentList course={filteredCourseObject} registeredStudents={filteredRegisteredStudents}/>
+            </div>
         </div>
-    )
-}
+    );
+};
+
 
 export default Registrations

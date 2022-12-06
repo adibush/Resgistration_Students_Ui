@@ -1,20 +1,18 @@
-import React from "react";
-import CourseDate from "./CourseDate";
+import React from 'react';
 import './RegisteredStudent.css';
+import CourseDate from './CourseDate';
 
-function RegisteredStudent(props){
+function RegisteredStudent(props) {
 
-    const {course, studentName} = props;
-
-    return(
-        <div className="registration-student card">
-            <CourseDate date={course.startDate}/>
-            <div className="registration-student__description">
-                <h2>{studentName}</h2>
-                <div className="registration-student__course">{course.displayName}</div>
+    return (
+        <div className='registration-student card'>
+            <CourseDate date={props.course.startDate}/>
+            <div className='registration-student__description'>
+                <h2>{props.studentName}</h2>
+                <div className='registration-student__course'>{props.course.displayName}</div>
             </div>
         </div>
-    )
+    );
 }
 
-export default RegisteredStudent
+export default RegisteredStudent;
