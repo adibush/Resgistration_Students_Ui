@@ -9,6 +9,12 @@ const App = () => {
     const [registeredStudents, setRegisteredStudents] = useState([]);
     const [availableCourses, setAvailableCourses] = useState();
 
+    getAllCourses().then(response =>{
+        response.data.map(course=>{
+            console.log(course)
+        })
+    });
+
     useEffect(() => {
         getAllCourses().then(
             res => {
